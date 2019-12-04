@@ -1,0 +1,24 @@
+{
+  "name": "Course-Search",
+  "version": "1.0.0",
+  "description": "This application is used to search course based on user search. (Under development)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajithcravi/Course-Search.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajithcravi/Course-Search/issues"
+  },
+  "homepage": "https://github.com/ajithcravi/Course-Search#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.1"
+  }
+}
