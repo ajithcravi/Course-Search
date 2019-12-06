@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from "react";
+// Importing packages and styles
+import React, { useState, useEffect } from "react"; //Importing React, usestate and useeffect  from react
+import SearchTab from "./components/searchTab";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 const App = () => {
+  let [courseDetails, setCourseDetails] = useState(undefined);
   useEffect(() => {
     fetch("http://nut-case.s3.amazonaws.com/coursessc.json")
       .then(response => response.json())
-      .then(result => {
-        console.log(result);
-        localStorage.setItem("courseData", JSON.stringify(result));
-      });
+      .then(result => setCourseDetails((courseDetails = result)));
   }, []);
-
-  let data = JSON.parse(localStorage.getItem("courseData"));
-
-  if (data.length > 0) {
-    return (
-      <div>
-        {data.map(details => (
-          <h5 key={details["Course Id"]}>{details["Course Id"]}</h5>
-        ))}
-      </div>
-    );
-  }
-  return <h1>Failure da mapla</h1>;
+  return <SearchTab courseDetails={courseDetails} />;
 };
 
 export default App;
