@@ -2,12 +2,21 @@ import React, { useEffect, useState } from "react";
 import $ from "jquery";
 
 const SearchTab = props => {
-  const changeHandler = () => {
-    $("#input").change(() =>
-      console.log("Vanakkam da mapla... input la irundhu")
-    );
+  const filterCondition = element => {
+    console.log(element);
+    let searchString = $("#input").val();
+    element["Course Name"].includes(`${searchString}`);
   };
-  changeHandler();
+
+  const changeHandler = array => {
+    $("#input").on("input", () => {
+      let newArray = array.filter(filterCondition);
+      console.log(newArray);
+    });
+  };
+
+  changeHandler(props.courseDetails);
+
   return (
     <div className="input-group mb-3">
       <input
