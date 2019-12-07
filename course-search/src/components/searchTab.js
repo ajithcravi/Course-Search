@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import $ from "jquery";
 
-const SearchTab = props => {
+const SearchTab = () => {
+  const formNewArrayOfUniqueItemsFromArrayOfObjects = (array, objectKey) => {
+    let childSubjectArray = [];
+    array.forEach(element => {
+      if ($.inArray(element[objectKey], childSubjectArray) === -1)
+        childSubjectArray.push(element[objectKey]);
+    });
+    return childSubjectArray;
+  };
+
   const filterCondition = element => {
-    console.log(element);
     let searchString = $("#input").val();
-    element["Course Name"].includes(`${searchString}`);
+    return element.toUpperCase().includes(searchString.toUpperCase());
   };
 
   const changeHandler = array => {
@@ -15,7 +23,19 @@ const SearchTab = props => {
     });
   };
 
-  changeHandler(props.courseDetails);
+  const fetchCourseDetailsFromApi = () => {
+    fetch("http://nut-case.s3.amazonaws.com/coursessc.json")
+      .then(courseDetails => courseDetails.json())
+      .then(parsedCourseDetailsArray =>
+        formNewArrayOfUniqueItemsFromArrayOfObjects(
+          parsedCourseDetailsArray,
+          "Child Subject"
+        )
+      )
+      .then(subjectsList => changeHandler(subjectsList));
+  };
+
+  fetchCourseDetailsFromApi();
 
   return (
     <div className="input-group mb-3">
