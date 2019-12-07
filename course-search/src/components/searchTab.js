@@ -2,13 +2,36 @@ import React from "react";
 import $ from "jquery";
 
 const SearchTab = () => {
-  const formNewArrayOfUniqueItemsFromArrayOfObjects = (array, objectKey) => {
-    let childSubjectArray = [];
+  const formNewArrayOfUniqueItemsFromArrayOfObjects = (
+    array,
+    objectKey1,
+    objectKey2
+  ) => {
+    let uniqueArray = [];
+    let count = 0;
     array.forEach(element => {
-      if ($.inArray(element[objectKey], childSubjectArray) === -1)
-        childSubjectArray.push(element[objectKey]);
+      let elementIndexInArrayUsingObjectKey1 = $.inArray(
+        element[objectKey1],
+        uniqueArray
+      );
+      let elementIndexInArrayUsingObjectKey2 = $.inArray(
+        element[objectKey2],
+        uniqueArray
+      );
+      if (elementIndexInArrayUsingObjectKey1 === -1) {
+        uniqueArray.push(element[objectKey1]);
+      }
+      if (elementIndexInArrayUsingObjectKey2 === -1) {
+        uniqueArray.push(element[objectKey2]);
+      }
+      // else {
+      //   uniqueArray[1][elementIndexInArrayUsingObjectKey1].push([count]);
+      //   uniqueArray[1][elementIndexInArrayUsingObjectKey2].push([count]);
+      // }
+      count++;
     });
-    return childSubjectArray;
+    console.log(uniqueArray);
+    return uniqueArray;
   };
 
   const filterCondition = element => {
@@ -29,7 +52,8 @@ const SearchTab = () => {
       .then(parsedCourseDetailsArray =>
         formNewArrayOfUniqueItemsFromArrayOfObjects(
           parsedCourseDetailsArray,
-          "Child Subject"
+          "Child Subject",
+          "Provider"
         )
       )
       .then(subjectsList => changeHandler(subjectsList));
@@ -43,8 +67,8 @@ const SearchTab = () => {
         type="text"
         id="input"
         className="form-control"
-        placeholder="Recipient's username"
-        aria-label="Recipient's username"
+        placeholder="Let's begin here"
+        aria-label="Let's begin here"
         aria-describedby="basic-addon2"
       />
       <div className="input-group-append">
