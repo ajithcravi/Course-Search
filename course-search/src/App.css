@@ -1,0 +1,19 @@
+.contents {
+  margin: auto;
+  width: 80%;
+  padding-top: 5%;
+}
+
+.appTitle {
+  float: right;
+}
+
+.card--marginBottom-1rem {
+  margin-bottom: 1rem;
+}
+
+.button-right {
+  float: right;
+}
+
+

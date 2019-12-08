@@ -1,13 +1,17 @@
-// Importing the requiredmodules
-import React from "react"; //Importing react
+// Importing the required modules
+import React, { useState } from "react"; //Importing react
 import $ from "jquery"; //Importing jquery
+import Result from "./Result";
 
 // Defining the SearchTab component
 const SearchTab = () => {
+  let [courses, setCourses] = useState([]);
   let courseDetails = []; // This array contains the course details fetched from the api
   // This array contains the keywords that the user will search for at index 0 and the respective indices in 'courseDetails' array at index 1.
   // It is declred outside the 'createKeywordsWithRespectiveIndicesArray' function because it's scope extends beyond the function
   let keywordsWithRespectiveIndices = [[], []];
+
+  let courseSearchResult = [];
 
   /**
    * This function is displayed as a part of  SearchTab component.
@@ -82,7 +86,7 @@ const SearchTab = () => {
 
   /**
    * This function is displayed as a part of  SearchTab component.
-   * @description handles the changes made to the DOM element with id 'input'
+   * @description This function handles the changes made to the DOM element with id 'input'
    * @function changeHandler
    * @param {array} - The array to be searched through
    */
@@ -90,7 +94,6 @@ const SearchTab = () => {
     $("#input").on("input", () => {
       let keywordIndex = [];
       let courseIndex = [];
-      let courseResult = [];
 
       // It filers the 'keywordsWithRespectiveIndices[0]' array according to the user input and stores it in 'filteredKeywordsArrayAccordingToInputSearch'
       let filteredKeywordsArrayAccordingToInputSearch = array[0].filter(
@@ -108,43 +111,56 @@ const SearchTab = () => {
 
       // For each value in the 'courseIndex' array and subarrays find the respective element from the 'courseDetails' array
       courseIndex.forEach(element => {
-        courseResult = element.map(
+        courseSearchResult = element.map(
           particularElement => courseDetails[particularElement]
         );
       });
-      console.log(courseResult);
+      setCourses(courseSearchResult);
     });
   };
 
-  const fetchCourseDetailsFromApi = () => {
-    fetch("http://nut-case.s3.amazonaws.com/coursessc.json")
-      .then(data => data.json())
+  /**
+   * This function is displayed as a part of  SearchTab component.
+   * @description This function fetches data from API.
+   * @function fetchCourseDetails
+   */
+  const fetchCourseDetails = () => {
+    fetch("http://nut-case.s3.amazonaws.com/coursessc.json") // Fetching data from API
+      .then(data => data.json()) // Parsing the feetched data
       .then(parseddataArray =>
         createKeywordsWithRespectiveIndicesArray(
+          // Calling the createKeywordsWithRespectiveIndicesArray function
           parseddataArray,
           "Child Subject",
           "Provider"
         )
       )
-      .then(subjectsList => changeHandler(subjectsList));
+      .then(subjectsList => changeHandler(subjectsList)); // Calling the changeHandler function
   };
 
-  fetchCourseDetailsFromApi();
-
+  fetchCourseDetails();
   return (
-    <div className="input-group mb-3">
-      <input
-        type="text"
-        id="input"
-        className="form-control"
-        placeholder="Let's begin here"
-        aria-label="Let's begin here"
-        aria-describedby="basic-addon2"
-      />
-      <div className="input-group-append">
-        <button className="btn btn-outline-secondary" type="button">
-          Learn
-        </button>
+    <div>
+      <h1 className="appTitle">Let's Learn</h1>
+      <div className="input-group mb-3 searchbarAndButton">
+        <input
+          type="text"
+          id="input"
+          className="form-control"
+          placeholder="Begin here"
+          aria-label="Begin here"
+          aria-describedby="basic-addon2"
+        />
+        <div className="input-group-append">
+          <button className="btn btn-outline-secondary" type="button">
+            Learn
+          </button>
+        </div>
+      </div>
+      <div className="row">
+        {courses.map(element => (
+          <Result key={element["Course Id"]} courseDetails={element} />
+        ))}
       </div>
     </div>
   );
