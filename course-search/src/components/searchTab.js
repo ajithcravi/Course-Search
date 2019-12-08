@@ -124,7 +124,7 @@ const SearchTab = () => {
    * @function fetchCourseDetails
    */
   const fetchCourseDetails = () => {
-    fetch("http://nut-case.s3.amazonaws.com/coursessc.json") // Fetching data from API
+    fetch("https://nut-case.s3.amazonaws.com/coursessc.json") // Fetching data from API
       .then(data => data.json()) // Parsing the feetched data
       .then(parseddataArray =>
         createKeywordsWithRespectiveIndicesArray(
