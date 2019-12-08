@@ -16,4 +16,10 @@
   float: right;
 }
 
+.nextSession {
+  float: right;
+}
 
+.cardButtons {
+  margin-top: 10px;
+}

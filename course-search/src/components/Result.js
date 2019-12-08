@@ -16,25 +16,27 @@ const Result = props => {
             Platform: {props.courseDetails["Provider"]}
           </h6>
 
-          <p className="length text-muted">
+          <span className="length text-muted">
             Course Duration: {props.courseDetails["Length"]} hrs
-          </p>
-          <p className="nextSession text-muted">
+          </span>
+          <span className="nextSession text-muted">
             Next Session: {props.courseDetails["Next Session Date"]}
-          </p>
+          </span>
 
-          <a
-            href={props.courseDetails["Video(Url)"]}
-            className="btn btn-primary text-left"
-          >
-            Watch Video
-          </a>
-          <a
-            href={props.courseDetails["Url"]}
-            className="btn btn-success button-right"
-          >
-            Enroll Now
-          </a>
+          <div className="cardButtons">
+            <a
+              href={props.courseDetails["Video(Url)"]}
+              className="btn btn-primary text-left"
+            >
+              Watch Video
+            </a>
+            <a
+              href={props.courseDetails["Url"]}
+              className="btn btn-success button-right"
+            >
+              Enroll Now
+            </a>
+          </div>
         </div>
       </div>
     </div>

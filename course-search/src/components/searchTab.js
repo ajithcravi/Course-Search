@@ -115,7 +115,6 @@ const SearchTab = () => {
           particularElement => courseDetails[particularElement]
         );
       });
-      setCourses(courseSearchResult);
     });
   };
 
@@ -138,6 +137,10 @@ const SearchTab = () => {
       .then(subjectsList => changeHandler(subjectsList)); // Calling the changeHandler function
   };
 
+  const clickLearn = () => {
+    setCourses(courseSearchResult);
+  };
+
   fetchCourseDetails();
   return (
     <div>
@@ -152,7 +155,11 @@ const SearchTab = () => {
           aria-describedby="basic-addon2"
         />
         <div className="input-group-append">
-          <button className="btn btn-outline-secondary" type="button">
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={clickLearn}
+          >
             Learn
           </button>
         </div>
